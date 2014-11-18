@@ -7,23 +7,24 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class GameScreen implements Screen{
+    //setting variables
     public TiledMap map;
     public OrthogonalTiledMapRenderer renderer;
     public OrthographicCamera camera;
 
     public GameScreen() {
         //loads level map from my assets folder
-        map = new TmxMapLoader().load("map/level_01.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1/70f);
-        camera= new OrthographicCamera(14f, 14f);
+        map = new TmxMapLoader().load("map/level_01.tmx");      //takes path to map
+        renderer = new OrthogonalTiledMapRenderer(map, 1/70f);      //defines the unit per pixel
+        camera= new OrthographicCamera(14f, 14f);       //defines the size of camera in units
     }
 
     @Override
     public void render(float delta) {
         //updates all, every moment the platformer is active
-        camera.update();
-        renderer.setView(camera);
-        renderer.render();
+        camera.update();        //updates position of camera
+        renderer.setView(camera);       //renders map view
+        renderer.render();      //renders itself
 
     }
 
