@@ -2,6 +2,7 @@ package com.alaride.platformer.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -27,6 +28,11 @@ public class GameScreen implements Screen{
 
     @Override
     public void render(float delta) {
+
+        Gdx.gl.glClearColor(0.29f, 1f, 0.39f, 1f);  //Clears the Screen
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);    //Fills the screen with the color
+
+
         //updates all, every moment the platformer is active
         camera.update();        //updates position of camera
         renderer.setView(camera);       //renders map view
@@ -36,6 +42,8 @@ public class GameScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
+        camera.viewportWidth = 14f;
+        camera.viewportHeight = 14f * height / width;       //
 
     }
 
