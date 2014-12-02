@@ -43,7 +43,7 @@ public class GameScreen implements Screen{
     @Override
     public void resize(int width, int height) {
         camera.viewportWidth = 14f;
-        camera.viewportHeight = 14f * height / width;       //
+        camera.viewportHeight = 14f * height / width;       
 
     }
 
