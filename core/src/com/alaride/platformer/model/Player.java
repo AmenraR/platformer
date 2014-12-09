@@ -2,22 +2,25 @@ package com.alaride.platformer.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-
-import javax.xml.soap.Text;
+import com.badlogic.gdx.math.Vector2;;
 
 public class Player {
     public Vector2 position;
-    public Texture spritesheet;
+    public Texture spriteSheet;
     public TextureRegion[] spriteFrames;
+
+    public Animation animation;
+    private float stateTime;
+
 
     public Player() {
         position = new Vector2(0,0);    //creates an origin for the player's position
-        spritesheet = new Texture(Gdx.files.internal("img/aliens 1).png"));       //looks into the assets folder and searches for aliens and saves it in the spritesheet variable
+        spriteSheet = new Texture(Gdx.files.internal("img/aliens.png"));       //looks into the assets folder and searches for aliens and saves it in the spritesheet variable
 
-        TextureRegion[][] spriteSheetFrames = TextureRegion.split(spritesheet, 70, 100);
+        TextureRegion[][] spriteSheetFrames = TextureRegion.split(spriteSheet, 70, 100);
 
         int counter = 0;
 
@@ -38,15 +41,23 @@ public class Player {
             }
 
         }
+
+        TextureRegion[] animationFrames = new TextureRegion[2];     //a spot saved for the two walking animations (45 and 46) in textureRegion
+        animationFrames[0] = spriteFrames[45];      //a saved frame for the first step of the walking animation
+        animationFrames[1] = spriteFrames[46];      //a saved frame for the second step of the walking animation
+        animation = new Animation(0.5f, animationFrames);       //the animation flip rate, and where the frames are selected from
+
+        stateTime = 0f;
+
     }
 
     public void draw(Batch spriteBatch){
-        spriteBatch.draw(spriteFrames[37], 0 , 0 , 70, 100);
+        spriteBatch.draw(animation.getKeyFrame(stateTime, true), position.x , position.y , 70 * (1/70f), 100 * (1/70f));
 
     }
 
     public void update(float deltaTime){
-
-
+        stateTime += deltaTime;     //sets the game time
+        position.y += deltaTime;    //adds to the variable of
     }
 }
