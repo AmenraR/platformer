@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 
 public class GameScreen implements Screen{
     //setting variables
@@ -20,10 +23,15 @@ public class GameScreen implements Screen{
     public Batch spriteBatch;
     public Player player;
 
+    public static World gameWorld;
+    private Box2DDebugRenderer debugRenderer;
+
     public GameScreen() {
         //loads level map from my assets folder
         map = new TmxMapLoader().load("map/level_01.tmx");      //takes path to map
         renderer = new OrthogonalTiledMapRenderer(map, 1/70f);      //defines the unit per pixel
+        gameWorld = new World(new Vector2(0, -9.8f), true);     //setting the games gravity
+        debugRenderer = new Box2DDebugRenderer();
 
         float width = Gdx.graphics.getWidth();      //looks through the graphics library and pulls the window width and saves it into a variable
         float height = Gdx.graphics.getHeight();        //grabs the window height from the graphics library and saves it into a variable
@@ -53,6 +61,7 @@ public class GameScreen implements Screen{
         player.draw(spriteBatch);             //readies spritebach and ends spritebatch
         spriteBatch.end();
 
+        debugRenderer.render(gameWorld, camera.combined);       //used to display the shapes to the exact size.
 
 
     }

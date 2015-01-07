@@ -10,7 +10,6 @@ public class Spritesheet {
 
     public Texture spriteSheet;
     public TextureRegion[] spriteFrames;
-    public Animation animation;
 
     public Spritesheet(String pathToFile, int width, int height) {
 
@@ -20,8 +19,8 @@ public class Spritesheet {
 
         int counter = 0;
 
-        for(int row = 0; row < spriteSheetFrames.length; row++){
-            for(int column = 0; column < spriteSheetFrames[row].length; column++){
+        for (int row = 0; row < spriteSheetFrames.length; row++) {
+            for (int column = 0; column < spriteSheetFrames[row].length; column++) {
                 counter++;
             }
         }
@@ -30,8 +29,8 @@ public class Spritesheet {
 
         counter = 0;
 
-        for (TextureRegion[] row : spriteSheetFrames){      //looks at spriteSheetFrames and stores it in row
-            for (TextureRegion sprite : row){       //checks every row, and takes out every column, then stores it in sprite
+        for (TextureRegion[] row : spriteSheetFrames) {      //looks at spriteSheetFrames and stores it in row
+            for (TextureRegion sprite : row) {       //checks every row, and takes out every column, then stores it in sprite
                 spriteFrames[counter++] = sprite;       //puts the aliens from sprite into spriteFrames and counts them.
 
             }
@@ -41,12 +40,26 @@ public class Spritesheet {
 
     }
 
-    public Animation createAnimation(){
-        TextureRegion[] animationFrames = new TextureRegion[2];     //a spot saved for the two walking animations (45 and 46) in textureRegion
-        animationFrames[0] = spriteFrames[45];      //a saved frame for the first step of the walking animation
-        animationFrames[1] = spriteFrames[46];      //a saved frame for the second step of the walking animation
-        animation = new Animation(0.5f, animationFrames);       //the animation flip rate, and where the frames are selected from
+    public Animation createAnimation(int startFrame, int lastFrame, float animationSpeed) {
+        int counter = (lastFrame + 1) - startFrame;
+        TextureRegion[] animationFrames = new TextureRegion[counter];     //a spot saved for the two walking animations (45 and 46) in textureRegion
 
-        return animation;
+        for(int index = lastFrame; index >= startFrame; index--){
+            animationFrames[--counter] = spriteFrames[index];//create the animation frames
+        }
+
+        return new Animation(animationSpeed, animationFrames);//create new animation
     }
+
+    public Animation flipAnimation(Animation originalAnimation, boolean flipX, boolean flipY) {
+        int frameCount = originalAnimation.getKeyFrames().length;
+        TextureRegion[] flippedFrames = new TextureRegion[frameCount];
+
+        for (int index = 0; index <= frameCount - 1; index++) {
+            flippedFrames[index] = new TextureRegion(originalAnimation.getKeyFrames()[index]);
+            flippedFrames[index].flip(flipX, flipY);
+        }
+        return new Animation(originalAnimation.getFrameDuration(), flippedFrames);
+    }
+
 }
