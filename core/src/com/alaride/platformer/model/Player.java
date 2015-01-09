@@ -1,6 +1,6 @@
 package com.alaride.platformer.model;
 
-import com.alaride.platformer.view.GameScreen;
+import com.alaride.platformer.controller.LevelController;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -19,14 +19,14 @@ public class Player {
     private float stateTime;
     private HashMap<String, Animation> animations;
 
-    public int width;
-    public int height;
+    public float width;
+    public float height;
 
-    public Player() {
-        position = new Vector2(0,6);    //creates an origin for the player's position
+    public Player(int width, int height) {
+        position = new Vector2( 2,6);    //creates an origin for the player's position
         animations = new HashMap<String, Animation>();
-        width = 70;
-        height = 100;
+        this.width = width * (1/70f);
+        this.height = height * (1/70f);
         spriteSheet = new Spritesheet("img/aliens.png", width, height);     //makes a new object for the character
         animations.put("walk", spriteSheet.createAnimation(9, 10, 0.1f));
         animations.put("walkLeft", spriteSheet.flipAnimation(animations.get("walk"), true, false));
@@ -40,16 +40,16 @@ public class Player {
         bodyDefinition.type = BodyDef.BodyType.DynamicBody;     //setting the type of body
         bodyDefinition.position.set(position);      //setting position
 
-        Body playerBody = GameScreen.gameWorld.createBody(bodyDefinition);      //storing all of the body's information within the player body
+        Body playerBody = LevelController.gameWorld.createBody(bodyDefinition);      //storing all of the body's information within the player body
         playerBody.setUserData(this);
 
         PolygonShape rectangleShape = new PolygonShape();       //created shape as a rectangle.
-        rectangleShape.setAsBox(width/2f, height/2, new Vector2(width/2f, height/2f), 0f);      //setting the box's height and width
+        rectangleShape.setAsBox(this.width/2f, this.height/2, new Vector2(this.width/2f, this.height/2f), 0f);      //setting the box's height and width
 
         FixtureDef fixtureDefinition = new FixtureDef();        //defined the shape properties
         fixtureDefinition.shape = rectangleShape;       //storing the shape info as the definition of the shape
 
-        playerBody.createFixture(fixtureDefinition);        
+        playerBody.createFixture(fixtureDefinition);
         rectangleShape.dispose();       //deletes the shape
 
 
@@ -57,7 +57,7 @@ public class Player {
     }
 
     public void draw(Batch spriteBatch){
-        spriteBatch.draw(animations.get(currentAnimation).getKeyFrame(stateTime, true), position.x , position.y , width * (1/70f), height * (1/70f)); //created animation and put it in the table
+        spriteBatch.draw(animations.get(currentAnimation).getKeyFrame(stateTime, true), position.x , position.y , width, height); //created animation and put it in the table
 
     }
 
