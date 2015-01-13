@@ -1,5 +1,6 @@
 package com.alaride.platformer.controller;
 
+import com.alaride.platformer.model.Level;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -12,7 +13,9 @@ import com.badlogic.gdx.physics.box2d.World;
 //this level controller is the only one used
 
 public class LevelController {
-    public static TiledMap map;
+    public static final float UNIT_SCALE = 1/70f;
+
+    public static Level level;
     public static OrthogonalTiledMapRenderer renderer;
     public static Batch spriteBatch;
 
@@ -22,8 +25,9 @@ public class LevelController {
     public static void initializeController(){
 
         //loads level map from my assets folder
-        map = new TmxMapLoader().load("map/level_01.tmx");      //takes path to map
-        renderer = new OrthogonalTiledMapRenderer(map, 1/70f);      //defines the unit per pixel
+
+        level = new Level("map/level_01.tmx");
+        renderer = new OrthogonalTiledMapRenderer(level.map, UNIT_SCALE);      //defines the unit per pixel
         gameWorld = new World(new Vector2(0, -9.8f), true);     //setting the games gravity
         debugRenderer = new Box2DDebugRenderer();
 
