@@ -30,7 +30,7 @@ public class LevelController {
 
         level = new Level("map/level_01.tmx");
         renderer = new OrthogonalTiledMapRenderer(level.map, UNIT_SCALE);      //defines the unit per pixel
-        gameWorld = new World(new Vector2(0, -9.8f), true);     //setting the games gravity
+        gameWorld = new World(new Vector2(0, 0), true);     //setting the games gravity
         debugRenderer = new Box2DDebugRenderer();
         worldBodies = new Array<Body>();
         spriteBatch = renderer.getSpriteBatch();        //grants the ability to draw the textures on the screen in one print
@@ -58,8 +58,8 @@ public class LevelController {
         gameWorld.getBodies(worldBodies);
 
         for(Body body : worldBodies){
-            Sprite playerBody = (Sprite)body.getUserData();
-            playerBody.position = body.getPosition();
+            Sprite spriteBody = (Sprite)body.getUserData();
+            spriteBody.position = body.getPosition();
         }
     }
 }
