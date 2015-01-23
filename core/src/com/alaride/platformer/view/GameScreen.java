@@ -1,6 +1,7 @@
 package com.alaride.platformer.view;
 
 import com.alaride.platformer.controller.CameraController;
+import com.alaride.platformer.controller.EnemyController;
 import com.alaride.platformer.controller.LevelController;
 import com.alaride.platformer.controller.PlayerController;
 import com.alaride.platformer.model.Player;
@@ -26,6 +27,7 @@ public class GameScreen implements Screen{
         LevelController.initializeController();
         CameraController.initializeController();
         PlayerController.intitializeController();
+        EnemyController.initializeController();
 
     }
 
@@ -40,6 +42,7 @@ public class GameScreen implements Screen{
         CameraController.update();
         LevelController.update();
         PlayerController.update(delta);
+        EnemyController.update(delta);
         LevelController.draw();
     }
 

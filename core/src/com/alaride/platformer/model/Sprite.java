@@ -20,14 +20,14 @@ public class Sprite {
     public float width;
     public float height;
 
-    public Sprite(Vector2 position, int width, int height){
+    public Sprite(Vector2 position, int width, int height, String sheetPath){
         this.position = position;    //creates an origin for the player's position
         animations = new HashMap<String, Animation>();
 
         this.width = width * (1/70f);
         this.height = height * (1/70f);
 
-        spriteSheet = new Spritesheet("img/aliens.png", width, height);     //makes a new object for the character
+        spriteSheet = new Spritesheet(sheetPath, width, height);     //makes a new object for the character
         currentAnimation = "walk";
         stateTime = 0f;
     }

@@ -1,8 +1,11 @@
 package com.alaride.platformer.controller;
 
+import com.alaride.platformer.model.Bodies;
 import com.alaride.platformer.model.Level;
 import com.alaride.platformer.model.Sprite;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -30,16 +33,18 @@ public class LevelController {
 
         level = new Level("map/level_01.tmx");
         renderer = new OrthogonalTiledMapRenderer(level.map, UNIT_SCALE);      //defines the unit per pixel
-        gameWorld = new World(new Vector2(0, 0), true);     //setting the games gravity
+        gameWorld = new World(new Vector2(0, -9.8f), true);     //setting the games gravity
         debugRenderer = new Box2DDebugRenderer();
         worldBodies = new Array<Body>();
         spriteBatch = renderer.getSpriteBatch();        //grants the ability to draw the textures on the screen in one print
+        createLevelBodies();
     }
 
     public static void draw(){
         //ready to begin drawing
         spriteBatch.begin();
         PlayerController.player.draw(spriteBatch);             //readies spritebach and ends spritebatch
+        EnemyController.enemy.draw(spriteBatch);
         spriteBatch.end();
 
         debugRenderer.render(gameWorld, CameraController.camera.combined);       //used to display the shapes to the exact size.
@@ -59,7 +64,20 @@ public class LevelController {
 
         for(Body body : worldBodies){
             Sprite spriteBody = (Sprite)body.getUserData();
-            spriteBody.position = body.getPosition();
+
+            if(spriteBody != null) {
+                spriteBody.position = body.getPosition();
+            }
         }
+    }
+
+    private static void createLevelBodies(){
+        MapObjects mapObjects = level.getMapObjects(level.getMapLayer("collision"));        //gets the map layer and stores it in mapObjects
+
+        for(MapObject mapObject : mapObjects){
+            Bodies. createBody(mapObject);
+
+        }
+
     }
 }

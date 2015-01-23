@@ -3,22 +3,16 @@ package com.alaride.platformer.model;
 import com.alaride.platformer.controller.LevelController;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 
+public class Enemy extends Sprite{
 
-public class Player extends Sprite{
+    public Enemy(Vector2 position, int width, int height, String sheetPath) {
+        super(position, width, height, sheetPath);
 
-
-    public Player(Vector2 position, int width, int height, String sheetPath) {
-    super(position, width, height, sheetPath);
-
-        animations.put("walk", spriteSheet.createAnimation(9, 10, 0.1f));
-        animations.put("walkLeft", spriteSheet.flipAnimation(animations.get("walk"), true, false));
-        animations.put("crouch", spriteSheet.createAnimation(3, 3, 0.1f));
-        animations.put("crouchLeft", spriteSheet.flipAnimation(animations.get("crouch"), true, false));
+        animations.put("walk", spriteSheet.createAnimation(0, 1, 0.1f));
 
         BodyDef bodyDefinition = new BodyDef();     //stores the properties of the body
         bodyDefinition.type = BodyDef.BodyType.DynamicBody;     //setting the type of body

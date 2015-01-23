@@ -12,7 +12,7 @@ public class PlayerController {
     private static final float MAX_Velocity = 15f;
 
     public static void intitializeController(){
-        player = new Player(new Vector2(2,6), 70, 100);
+        player = new Player(new Vector2(2,6), 70, 100, "img/aliens.png");
 
     }
 
@@ -26,13 +26,18 @@ public class PlayerController {
         Vector2 velocity = player.physicsBody.getLinearVelocity();
         Vector2 position = player.physicsBody.getPosition();
 
-        if(Math.abs(velocity.x) > MAX_Velocity){
+        if(Math.abs(velocity.x) > MAX_Velocity) {
             velocity.x = Math.signum(velocity.x) * MAX_Velocity;
             player.physicsBody.setLinearVelocity(velocity.x, velocity.y);
         }
 
+
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             player.physicsBody.applyLinearImpulse(VELOCITY, 0f, position.x, position.y, true);
+
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            player.physicsBody.applyLinearImpulse(-VELOCITY, 0f, position.x, position.y, true);
 
         }
     }
