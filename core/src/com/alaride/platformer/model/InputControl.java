@@ -28,5 +28,6 @@ public class InputControl {
         spriteBatch.draw(textureRegion, position.x, position.y, width * LevelController.UNIT_SCALE, height* LevelController.UNIT_SCALE);     //passing in the variables
     }
 
+
 }
 //video 47 11:52
