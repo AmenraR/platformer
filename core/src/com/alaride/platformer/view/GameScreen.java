@@ -4,6 +4,8 @@ import com.alaride.platformer.controller.CameraController;
 import com.alaride.platformer.controller.EnemyController;
 import com.alaride.platformer.controller.LevelController;
 import com.alaride.platformer.controller.PlayerController;
+import com.alaride.platformer.model.InputControl;
+import com.alaride.platformer.model.InputController;
 import com.alaride.platformer.model.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -28,7 +30,7 @@ public class GameScreen implements Screen{
         CameraController.initializeController();
         PlayerController.intitializeController();
         EnemyController.initializeController();
-
+        InputController.initializeController();
     }
 
     @Override

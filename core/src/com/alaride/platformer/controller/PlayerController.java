@@ -8,12 +8,16 @@ import com.badlogic.gdx.math.Vector2;
 public class PlayerController {
 
     public static Player player;
+    public static String movementAction;
+    public static String specialAction;
+
     private static final float VELOCITY = 1f;
     private static final float MAX_Velocity = 15f;
 
     public static void intitializeController(){
         player = new Player(new Vector2(2,6), 70, 100, "img/aliens.png");
-
+        movementAction = "";
+        specialAction = "";
     }
 
     public static void update(float deltaTime){
@@ -29,6 +33,10 @@ public class PlayerController {
         if(Math.abs(velocity.x) > MAX_Velocity) {
             velocity.x = Math.signum(velocity.x) * MAX_Velocity;
             player.physicsBody.setLinearVelocity(velocity.x, velocity.y);
+        }
+
+        if(movementAction.equalsIgnoreCase("right")){
+
         }
 
 

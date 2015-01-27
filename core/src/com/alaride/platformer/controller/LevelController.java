@@ -1,6 +1,8 @@
 package com.alaride.platformer.controller;
 
 import com.alaride.platformer.model.Bodies;
+import com.alaride.platformer.model.InputControl;
+import com.alaride.platformer.model.InputController;
 import com.alaride.platformer.model.Level;
 import com.alaride.platformer.model.Sprite;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -46,6 +48,8 @@ public class LevelController {
         PlayerController.player.draw(spriteBatch);             //readies spritebach and ends spritebatch
         EnemyController.enemy.draw(spriteBatch);
         spriteBatch.end();
+
+        InputController.draw(spriteBatch);
 
         debugRenderer.render(gameWorld, CameraController.camera.combined);       //used to display the shapes to the exact size.
     }
