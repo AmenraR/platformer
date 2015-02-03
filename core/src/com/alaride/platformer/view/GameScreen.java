@@ -28,7 +28,7 @@ public class GameScreen implements Screen{
     public GameScreen() {
         LevelController.initializeController();
         CameraController.initializeController();
-        PlayerController.intitializeController();
+        PlayerController.initializeController();
         EnemyController.initializeController();
         InputController.initializeController();
     }

@@ -1,8 +1,10 @@
 package com.alaride.platformer.model;
 
+import com.alaride.platformer.controller.CameraController;
 import com.alaride.platformer.controller.LevelController;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class InputControl {
@@ -28,6 +30,8 @@ public class InputControl {
         spriteBatch.draw(textureRegion, position.x, position.y, width * LevelController.UNIT_SCALE, height* LevelController.UNIT_SCALE);     //passing in the variables
     }
 
+    public Rectangle getBoundingBox(){
+        return new Rectangle(position.x / LevelController.UNIT_SCALE * CameraController.widthScale, position.y / LevelController.UNIT_SCALE * CameraController.heightScale, width * CameraController.widthScale, height* CameraController.heightScale);
+    }
 
 }
-//video 47 11:52

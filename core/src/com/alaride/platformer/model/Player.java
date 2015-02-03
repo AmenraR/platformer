@@ -1,50 +1,69 @@
 package com.alaride.platformer.model;
 
-import com.alaride.platformer.controller.LevelController;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-
+import com.alaride.platformer.controller.LevelController;
 
 public class Player extends Sprite{
 
+    //generate constructor for player
+    public Player(Vector2 position, int width,int height, String sheetPath) {
+        //call in parent function
+        super(position, width, height, sheetPath);
+        //store in animations
+        animations.put("walk", spriteSheet.createAnimation(31, 32, .1f));
+        animations.put("swim", spriteSheet.createAnimation(29, 30, .1f));
+        animations.put("start", spriteSheet.createAnimation(28, 28, .1f));
+        animations.put("jump", spriteSheet.createAnimation(27, 27, .1f));
+        animations.put("hurt", spriteSheet.createAnimation(26, 26, .1f));
+        animations.put("duck", spriteSheet.createAnimation(25, 25, .1f));
+        animations.put("climb", spriteSheet.createAnimation(23, 24, .1f));
+        animations.put("stand", spriteSheet.createAnimation(22, 22, .1f));
+        //flip animation
+        animations.put("walkFlip", spriteSheet.flipAnimation(animations.get("walk"), true, false));
+        animations.put("swimFlip", spriteSheet.flipAnimation(animations.get("swim"), true, false));
+        animations.put("startFlip", spriteSheet.flipAnimation(animations.get("start"), true, false));
+        animations.put("jumpFlip", spriteSheet.flipAnimation(animations.get("jump"), true, false));
+        animations.put("hurtFlip", spriteSheet.flipAnimation(animations.get("hurt"), true, false));
+        animations.put("duckFlip", spriteSheet.flipAnimation(animations.get("duck"), true, false));
 
-    public Player(Vector2 position, int width, int height, String sheetPath) {
-    super(position, width, height, sheetPath);
+        //store in animation type
+        currentAnimation= "walk";
 
-        animations.put("walk", spriteSheet.createAnimation(9, 10, 0.1f));
-        animations.put("walkLeft", spriteSheet.flipAnimation(animations.get("walk"), true, false));
-        animations.put("crouch", spriteSheet.createAnimation(3, 3, 0.1f));
-        animations.put("crouchLeft", spriteSheet.flipAnimation(animations.get("crouch"), true, false));
-
-        BodyDef bodyDefinition = new BodyDef();     //stores the properties of the body
-        bodyDefinition.type = BodyDef.BodyType.DynamicBody;     //setting the type of body
-        bodyDefinition.position.set(position);      //setting position
-
-        physicsBody = LevelController.gameWorld.createBody(bodyDefinition);      //storing all of the body's information within the player body
+        //set body definition in game world and set position
+        BodyDef bodyDefinition= new BodyDef();
+        bodyDefinition.type= BodyDef.BodyType.DynamicBody;
+        bodyDefinition.position.set(position);
+        //create body in game world
+        physicsBody= LevelController.gameWorld.createBody(bodyDefinition);
+        //create shape in game world
         physicsBody.setUserData(this);
-
-        PolygonShape rectangleShape = new PolygonShape();       //created shape as a rectangle.
-        rectangleShape.setAsBox(this.width/2f, this.height/2, new Vector2(this.width/2f, this.height/2f), 0f);      //setting the box's height and width
-
-        FixtureDef fixtureDefinition = new FixtureDef();        //defined the shape properties
-        fixtureDefinition.shape = rectangleShape;       //storing the shape info as the definition of the shape
-
+        //
+        physicsBody.setFixedRotation(true);
+        //create polygon shape
+        PolygonShape rectangleShape= new PolygonShape();
+        //set height
+        rectangleShape.setAsBox(this.width/2f, this.height/2f, new Vector2(this.width/2f, this.height/2f), 0f);
+        //create new fixture definition
+        FixtureDef fixtureDefinition= new FixtureDef();
+        //attach shape to out body
+        fixtureDefinition.shape= rectangleShape;
+        //
+        fixtureDefinition.density=1f;
+        //apply shape to player body
         physicsBody.createFixture(fixtureDefinition);
-        rectangleShape.dispose();       //deletes the shape
-
-
-
+        //deletes the shape
+        rectangleShape.dispose();
     }
-
+    //draw character
     public void draw(Batch spriteBatch){
-        super.draw(spriteBatch);        //calling from super to draw
+        super.draw(spriteBatch);
     }
-
+    //update properties on the character constantly
     public void update(float deltaTime){
-        super.update(deltaTime);        //calling from super for deltaTime
+        super.update(deltaTime);
     }
 }

@@ -1,5 +1,6 @@
 package com.alaride.platformer.model;
 
+import com.alaride.platformer.controller.LevelController;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -15,6 +16,7 @@ public class Sprite {
     public String currentAnimation;
 
     protected float stateTime;
+    public String direction;
     protected HashMap<String, Animation> animations;
 
     public float width;
@@ -24,12 +26,13 @@ public class Sprite {
         this.position = position;    //creates an origin for the player's position
         animations = new HashMap<String, Animation>();
 
-        this.width = width * (1/70f);
-        this.height = height * (1/70f);
+        this.width =width* (LevelController.UNIT_SCALE);
+        this.height = height * (LevelController.UNIT_SCALE);
 
         spriteSheet = new Spritesheet(sheetPath, width, height);     //makes a new object for the character
-        currentAnimation = "walk";
+        direction = "right";
         stateTime = 0f;
+        currentAnimation = "walk";
     }
 
     public void draw(Batch spriteBatch){

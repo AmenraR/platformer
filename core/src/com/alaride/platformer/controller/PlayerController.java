@@ -1,53 +1,101 @@
 package com.alaride.platformer.controller;
 
-import com.alaride.platformer.model.Player;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import com.alaride.platformer.model.Player;
 
 public class PlayerController {
-
+    //create new variables to display map
     public static Player player;
     public static String movementAction;
     public static String specialAction;
 
-    private static final float VELOCITY = 1f;
-    private static final float MAX_Velocity = 15f;
+    private enum State{
+        Idle, Walk, Run, Swim, Duck, Stand, Jump, Climb, Hurt
+    }
+    private static State playerState;
+    private static final float VELOCITY= 1f;
+    private static final float VELOCITY2= -1f;
+    private static final float MAX_VELOCITY= 2f;
+    private static final float JUMP_VELOCITY= 1f;
 
-    public static void intitializeController(){
-        player = new Player(new Vector2(2,6), 70, 100, "img/aliens.png");
-        movementAction = "";
-        specialAction = "";
+    public static void initializeController(){
+        //render the player
+        player= new Player(new Vector2(8, 8), 70, 100, "img/aliens.png");
+        movementAction= "";
+        specialAction= "";
+        playerState= State.Idle;
     }
 
     public static void update(float deltaTime){
         handleInput();
-        player.update(deltaTime);
 
+        //update character position constantly
+
+        player.update(deltaTime);
     }
 
     private static void handleInput(){
-        Vector2 velocity = player.physicsBody.getLinearVelocity();
-        Vector2 position = player.physicsBody.getPosition();
+        //handle keyboard input
+        Vector2 velocity= player.physicsBody.getLinearVelocity();
+        Vector2 position= player.physicsBody.getPosition();
 
-        if(Math.abs(velocity.x) > MAX_Velocity) {
-            velocity.x = Math.signum(velocity.x) * MAX_Velocity;
+        if(Math.abs(velocity.x)> MAX_VELOCITY){
+            velocity.x= Math.signum(velocity.x)* MAX_VELOCITY;
             player.physicsBody.setLinearVelocity(velocity.x, velocity.y);
         }
 
         if(movementAction.equalsIgnoreCase("right")){
 
-        }
-
-
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             player.physicsBody.applyLinearImpulse(VELOCITY, 0f, position.x, position.y, true);
-
+            player.direction= "right";
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            player.physicsBody.applyLinearImpulse(-VELOCITY, 0f, position.x, position.y, true);
 
+        if(movementAction.equalsIgnoreCase("left")){
+
+            player.physicsBody.applyLinearImpulse(VELOCITY2, 0f, position.x, position.y, true);
+            player.direction= "left";
+        }
+
+        if(specialAction.equalsIgnoreCase("jump")){
+
+            player.physicsBody.applyLinearImpulse(0f, JUMP_VELOCITY, position.x, position.y, true);
+        }
+
+        if(Math.abs(velocity.x)>0){
+            playerState= State.Walk;
+        }
+
+        else{
+            playerState=State.Idle;
+        }
+        setCurrentAnimation();
+
+    }
+
+    private static void setCurrentAnimation(){
+        if (player.direction.equals("right")){
+            setRightAnimation();
+        }
+        else if (player.direction.equals("left")){
+            setLeftAnimation();
+        }
+    }
+
+    private static void setRightAnimation(){
+        if (playerState== State.Walk){
+            player.currentAnimation= "walk";
+        }
+        else if (playerState== State.Idle){
+            player.currentAnimation= "stand";
+        }
+    }
+
+    private static void setLeftAnimation(){
+        if (playerState== State.Walk){
+            player.currentAnimation= "walkFlip";
+        }
+        else if (playerState== State.Idle){
+            player.currentAnimation= "stand";
         }
     }
 }
-

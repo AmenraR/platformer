@@ -43,12 +43,15 @@ public class LevelController {
     }
 
     public static void draw(){
+        spriteBatch.setProjectionMatrix(CameraController.camera.combined);
         //ready to begin drawing
         spriteBatch.begin();
         PlayerController.player.draw(spriteBatch);             //readies spritebach and ends spritebatch
         EnemyController.enemy.draw(spriteBatch);
         spriteBatch.end();
 
+
+        spriteBatch.setProjectionMatrix(CameraController.inputCamera.combined);
         InputController.draw(spriteBatch);
 
         debugRenderer.render(gameWorld, CameraController.camera.combined);       //used to display the shapes to the exact size.
