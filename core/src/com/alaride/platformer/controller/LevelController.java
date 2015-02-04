@@ -1,6 +1,7 @@
 package com.alaride.platformer.controller;
 
 import com.alaride.platformer.model.Bodies;
+import com.alaride.platformer.model.CollisionListener;
 import com.alaride.platformer.model.InputControl;
 import com.alaride.platformer.model.InputController;
 import com.alaride.platformer.model.Level;
@@ -36,6 +37,7 @@ public class LevelController {
         level = new Level("map/level_01.tmx");
         renderer = new OrthogonalTiledMapRenderer(level.map, UNIT_SCALE);      //defines the unit per pixel
         gameWorld = new World(new Vector2(0, -9.8f), true);     //setting the games gravity
+        gameWorld.setContactListener(new CollisionListener());
         debugRenderer = new Box2DDebugRenderer();
         worldBodies = new Array<Body>();
         spriteBatch = renderer.getSpriteBatch();        //grants the ability to draw the textures on the screen in one print

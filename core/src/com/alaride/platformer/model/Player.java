@@ -45,6 +45,10 @@ public class Player extends Sprite{
         physicsBody.setFixedRotation(true);
         //create polygon shape
         PolygonShape rectangleShape= new PolygonShape();
+
+        PolygonShape sensorShape = new PolygonShape();
+        sensorShape.setAsBox(this.width / 2.5f, this.height / 32, new Vector2(this.width / 2, 0), 0);
+
         //set height
         rectangleShape.setAsBox(this.width/2f, this.height/2f, new Vector2(this.width/2f, this.height/2f), 0f);
         //create new fixture definition
@@ -53,6 +57,13 @@ public class Player extends Sprite{
         fixtureDefinition.shape= rectangleShape;
         //
         fixtureDefinition.density=1f;
+
+        FixtureDef fixtureDefinitionSensor = new FixtureDef();
+        fixtureDefinitionSensor.shape = sensorShape;
+        fixtureDefinitionSensor.isSensor = true;
+
+        physicsBody.createFixture(fixtureDefinition);
+        physicsBody.createFixture(fixtureDefinitionSensor);
         //apply shape to player body
         physicsBody.createFixture(fixtureDefinition);
         //deletes the shape
