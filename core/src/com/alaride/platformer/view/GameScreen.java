@@ -3,6 +3,7 @@ package com.alaride.platformer.view;
 import com.alaride.platformer.controller.CameraController;
 import com.alaride.platformer.controller.EnemyController;
 import com.alaride.platformer.controller.LevelController;
+import com.alaride.platformer.controller.MusicController;
 import com.alaride.platformer.controller.PlayerController;
 import com.alaride.platformer.model.InputControl;
 import com.alaride.platformer.model.InputController;
@@ -26,6 +27,7 @@ public class GameScreen implements Screen{
 
 
     public GameScreen() {
+        MusicController.initializeMusicController();
         LevelController.initializeController();
         CameraController.initializeController();
         PlayerController.initializeController();

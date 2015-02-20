@@ -9,20 +9,22 @@ public class PlayerController {
     public static String movementAction;
     public static String specialAction;
 
+    public static boolean grounded;
+
     private enum State{
         Idle, Walk, Run, Swim, Duck, Stand, Jump, Climb, Hurt
     }
     private static State playerState;
     private static final float VELOCITY= 1f;
     private static final float VELOCITY2= -1f;
-    private static final float MAX_VELOCITY= 2f;
+    private static final float MAX_VELOCITY= 5f;
     private static final float JUMP_VELOCITY= 1f;
 
     public static void initializeController(){
         //render the player
-        player= new Player(new Vector2(8, 8), 70, 100, "img/aliens.png");
-        movementAction= "";
-        specialAction= "";
+        player= new Player(new Vector2(0,2), 70, 100, "img/aliens.png");
+        movementAction = "";
+        specialAction = "";
         playerState= State.Idle;
     }
 
@@ -98,4 +100,13 @@ public class PlayerController {
             player.currentAnimation= "stand";
         }
     }
+    private static void setJumpAnimation(){
+        if (playerState == State.Jump){
+            player.currentAnimation= "jump";
+        }
+
+
+    }
+
+
 }

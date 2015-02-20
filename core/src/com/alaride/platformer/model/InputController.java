@@ -85,7 +85,7 @@ public class InputController {
                 else if (keycode== Input.Keys.LEFT){
                     PlayerController.movementAction= "left";
                 }
-                else if (keycode== Input.Keys.UP){
+                else if (keycode== Input.Keys.SPACE){
                     PlayerController.specialAction= "jump";
                 }
                 return true;

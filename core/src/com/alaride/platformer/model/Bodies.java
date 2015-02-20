@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.alaride.platformer.controller.LevelController;
 
-public class Bodies {
+public class Bodies{
 
     public static void createBody(MapObject mapObject){
         String bodyType =mapObject.getProperties().get("type").toString();
@@ -77,10 +77,11 @@ public class Bodies {
             RectangleMapObject blockObject= (RectangleMapObject) mapObject;
             BodyDef bodyDefinition= new BodyDef();
             bodyDefinition.type= BodyDef.BodyType.DynamicBody;
-            bodyDefinition.position.set(blockObject.getRectangle().x* LevelController.UNIT_SCALE,
-                    blockObject.getRectangle().y* LevelController.UNIT_SCALE);
+            bodyDefinition.position.set(blockObject.getRectangle().x* LevelController.UNIT_SCALE,blockObject.getRectangle().y* LevelController.UNIT_SCALE);
+            Block block = new Block(bodyDefinition.position, 70,70, "img/background-tiles.png");
+            LevelController.worldSprites.add(block);
 
-            //
+
             Body physicsBody= LevelController.gameWorld.createBody(bodyDefinition);
             PolygonShape blockShape= new PolygonShape();
             blockShape.setAsBox(blockObject.getRectangle().width* LevelController.UNIT_SCALE/2f,

@@ -2,7 +2,6 @@ package com.alaride.platformer.controller;
 
 import com.alaride.platformer.model.Bodies;
 import com.alaride.platformer.model.CollisionListener;
-import com.alaride.platformer.model.InputControl;
 import com.alaride.platformer.model.InputController;
 import com.alaride.platformer.model.Level;
 import com.alaride.platformer.model.Sprite;
@@ -26,13 +25,16 @@ public class LevelController {
     public static OrthogonalTiledMapRenderer renderer;
     public static Batch spriteBatch;
 
+
     public static World gameWorld;
     private static Array<Body> worldBodies;
+    public static Array<Sprite> worldSprites;
     private static Box2DDebugRenderer debugRenderer;
 
     public static void initializeController(){
 
         //loads level map from my assets folder
+
 
         level = new Level("map/level_01.tmx");
         renderer = new OrthogonalTiledMapRenderer(level.map, UNIT_SCALE);      //defines the unit per pixel
@@ -40,7 +42,10 @@ public class LevelController {
         gameWorld.setContactListener(new CollisionListener());
         debugRenderer = new Box2DDebugRenderer();
         worldBodies = new Array<Body>();
+        worldSprites = new Array<Sprite>();
         spriteBatch = renderer.getSpriteBatch();        //grants the ability to draw the textures on the screen in one print
+        MusicController.play("music");
+
         createLevelBodies();
     }
 
@@ -50,6 +55,11 @@ public class LevelController {
         spriteBatch.begin();
         PlayerController.player.draw(spriteBatch);             //readies spritebach and ends spritebatch
         EnemyController.enemy.draw(spriteBatch);
+
+        for(Sprite sprite : worldSprites){
+            sprite.draw(spriteBatch);
+        }
+
         spriteBatch.end();
 
 

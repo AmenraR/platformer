@@ -55,7 +55,6 @@ public class Player extends Sprite{
         FixtureDef fixtureDefinition= new FixtureDef();
         //attach shape to out body
         fixtureDefinition.shape= rectangleShape;
-        //
         fixtureDefinition.density=1f;
 
         FixtureDef fixtureDefinitionSensor = new FixtureDef();

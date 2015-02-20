@@ -1,5 +1,6 @@
 package com.alaride.platformer.model;
 
+import com.alaride.platformer.controller.PlayerController;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -11,6 +12,14 @@ public class CollisionListener implements ContactListener {     //use implements
     public void beginContact(Contact contact) {     //what to do during a contact
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
+
+        boolean sensorA = fixtureA.isSensor();
+        boolean sensorB = fixtureB.isSensor();
+
+        if(sensorA || sensorB){
+            PlayerController.grounded = true;
+
+        }
     }
 
     @Override
